@@ -1,0 +1,106 @@
+syntax = "proto3";
+option go_package = "./protobuf/dal-wallet-go";
+package syncs;
+
+enum ReturnCode{
+  ERROR = 0;
+  SUCCESS = 1;
+}
+
+message PublicKey{
+  uint32 type = 1;
+  string format = 2;
+  string public_key = 3;
+}
+
+message Address{
+  uint32 type = 1;
+  string address = 2;
+}
+
+message Token{
+  uint32 decimals = 1;
+  string address = 2;
+  string token_name = 3;
+  string collect_amount = 4;
+  string cold_amount = 5;
+}
+
+message BusinessRegisterRequest{
+  string  consumer_token = 1;
+  string  request_id = 2;
+  string  notify_url = 3;
+}
+
+message BusinessRegisterResponse{
+  ReturnCode Code = 1;
+  string Msg = 2;
+}
+
+message ExportAddressesRequest{
+  string  consumer_token = 1;
+  string request_id = 2;
+  repeated PublicKey public_keys = 3;
+}
+
+message ExportAddressesResponse {
+  ReturnCode Code = 1;
+  string msg = 2;
+  repeated Address addresses = 3;
+}
+
+message Transactions {
+  string transaction_uuid = 1;
+  string from = 2;
+  string to = 3;
+  string value = 4;
+  string tx_type = 5;
+}
+
+message UnSignWithdrawTransactionRequest {
+  string consumer_token = 1;
+  string request_id = 2;
+  repeated Transactions txn = 3;
+}
+
+message ReturnTransactionHashes {
+  string transaction_uuid = 4;
+  string un_sign_tx = 5;
+}
+
+message UnSignWithdrawTransactionResponse {
+  ReturnCode code = 1;
+  string msg = 2;
+  repeated ReturnTransactionHashes return_tx_hashes = 3;
+}
+
+message SignedTransactions {
+  string transaction_uuid = 1;
+  string signature = 2;
+  string tx_type = 3;
+}
+
+message SignedWithdrawTransactionRequest {
+  string consumer_token = 1;
+  string request_id = 2;
+  repeated SignedTransactions sign_txn = 3;
+}
+
+message ReturnSignedTransactions {
+  string transaction_uuid = 1;
+  string signed_tx = 2;
+  string tx_id = 3;
+}
+
+message SignedWithdrawTransactionResponse {
+  ReturnCode code = 1;
+  string msg = 2;
+  repeated  ReturnSignedTransactions return_sign_txn = 3;
+}
+
+service BusinessMiddleWireServices {
+  rpc businessRegister(BusinessRegisterRequest) returns (BusinessRegisterResponse) {}
+  rpc exportAddressesByPublicKeys(ExportAddressesRequest) returns (ExportAddressesResponse) {}
+  rpc buildUnSignTransaction(UnSignWithdrawTransactionRequest) returns(UnSignWithdrawTransactionResponse){}
+  rpc buildSignedTransaction(SignedWithdrawTransactionRequest) returns(SignedWithdrawTransactionResponse){}
+}
