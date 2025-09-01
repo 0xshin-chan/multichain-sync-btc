@@ -1,9 +1,10 @@
 package database
 
 import (
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"math/big"
+
+	"github.com/google/uuid"
 )
 
 type ChildTxs struct {

@@ -2,12 +2,14 @@ package services
 
 import (
 	"context"
+	"time"
+
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/google/uuid"
-	"github.com/huahaiwudi/multichain-sync-btc/database"
-	"github.com/huahaiwudi/multichain-sync-btc/database/dynamic"
-	dal_wallet_go "github.com/huahaiwudi/multichain-sync-btc/protobuf/dal-wallet-go"
-	"time"
+
+	"github.com/0xshin-chan/multichain-sync-btc/database"
+	"github.com/0xshin-chan/multichain-sync-btc/database/dynamic"
+	dal_wallet_go "github.com/0xshin-chan/multichain-sync-btc/protobuf/dal-wallet-go"
 )
 
 const (

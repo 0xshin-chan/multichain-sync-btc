@@ -5,7 +5,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 	"sync"
 
-	"github.com/huahaiwudi/multichain-sync-btc/database"
+	"github.com/0xshin-chan/multichain-sync-btc/database"
 )
 
 // 定义一个全局的Cache实例

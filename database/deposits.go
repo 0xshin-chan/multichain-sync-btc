@@ -2,10 +2,11 @@ package database
 
 import (
 	"errors"
+	"math/big"
+
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-	"math/big"
 )
 
 type Deposits struct {

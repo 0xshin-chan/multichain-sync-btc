@@ -6,8 +6,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/log"
 
-	"github.com/huahaiwudi/multichain-sync-btc/rpcclient/syncclient/common"
-	"github.com/huahaiwudi/multichain-sync-btc/rpcclient/syncclient/utxo"
+	"github.com/0xshin-chan/multichain-sync-btc/rpcclient/syncclient/common"
+	"github.com/0xshin-chan/multichain-sync-btc/rpcclient/syncclient/utxo"
 )
 
 type WalletBtcAccountClient struct {

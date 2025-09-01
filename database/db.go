@@ -3,13 +3,15 @@ package database
 import (
 	"context"
 	"fmt"
-	"github.com/huahaiwudi/multichain-sync-btc/common/retry"
-	"github.com/huahaiwudi/multichain-sync-btc/config"
+	"os"
+	"path/filepath"
+
 	"github.com/pkg/errors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
-	"path/filepath"
+
+	"github.com/0xshin-chan/multichain-sync-btc/common/retry"
+	"github.com/0xshin-chan/multichain-sync-btc/config"
 )
 
 type DB struct {

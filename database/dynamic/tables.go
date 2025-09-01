@@ -2,7 +2,8 @@ package dynamic
 
 import (
 	"fmt"
-	"github.com/huahaiwudi/multichain-sync-btc/database"
+
+	"github.com/0xshin-chan/multichain-sync-btc/database"
 )
 
 func CreateTableFromTemplate(requestId string, db *database.DB) {

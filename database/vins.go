@@ -2,9 +2,10 @@ package database
 
 import (
 	"errors"
+	"math/big"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-	"math/big"
 )
 
 type Vins struct {

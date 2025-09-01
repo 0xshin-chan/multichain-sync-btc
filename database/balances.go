@@ -2,11 +2,12 @@ package database
 
 import (
 	"errors"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"math/big"
 	"time"
+
+	"github.com/ethereum/go-ethereum/log"
+	"github.com/google/uuid"
 )
 
 type Balances struct {

@@ -2,9 +2,10 @@ package database
 
 import (
 	"errors"
+	"gorm.io/gorm"
+
 	"github.com/ethereum/go-ethereum/log"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 type Business struct {

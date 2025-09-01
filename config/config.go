@@ -3,11 +3,10 @@ package config
 import (
 	"time"
 
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/urfave/cli/v2"
 
-	"github.com/ethereum/go-ethereum/log"
-
-	"github.com/huahaiwudi/multichain-sync-btc/flags"
+	"github.com/0xshin-chan/multichain-sync-btc/flags"
 )
 
 const (

@@ -2,9 +2,10 @@ package database
 
 import (
 	"errors"
-	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 type Addresses struct {

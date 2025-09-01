@@ -3,12 +3,11 @@ package syncclient
 import (
 	"errors"
 	"fmt"
-
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/log"
 
-	"github.com/huahaiwudi/multichain-sync-btc/common/bigint"
+	"github.com/0xshin-chan/multichain-sync-btc/common/bigint"
 )
 
 var (

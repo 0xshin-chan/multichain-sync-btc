@@ -7,7 +7,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/core/types"
 
-	"github.com/huahaiwudi/multichain-sync-btc/rpcclient/syncclient"
+	"github.com/0xshin-chan/multichain-sync-btc/rpcclient/syncclient"
 )
 
 type ReorgBlocks struct {

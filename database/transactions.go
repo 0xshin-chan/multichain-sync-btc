@@ -1,9 +1,10 @@
 package database
 
 import (
+	"math/big"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-	"math/big"
 )
 
 type Transactions struct {

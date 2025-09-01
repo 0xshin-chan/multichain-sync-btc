@@ -7,7 +7,7 @@
 package utxo
 
 import (
-	common "github.com/huahaiwudi/multichain-sync-btc/rpcclient/syncclient/common"
+	common "github.com/0xshin-chan/multichain-sync-btc/rpcclient/syncclient/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

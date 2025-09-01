@@ -2,11 +2,12 @@ package database
 
 import (
 	"errors"
-	"github.com/dapplink-labs/multichain-sync-btc/rpcclient/syncclient"
 	"gorm.io/gorm"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/core/types"
+
+	"github.com/0xshin-chan/multichain-sync-btc/rpcclient/syncclient"
 )
 
 type Blocks struct {
