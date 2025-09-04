@@ -625,8 +625,9 @@ func (x *UnSignWithdrawTransactionRequest) GetTxn() []*Transactions {
 
 type ReturnTransactionHashes struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	TransactionUuid string                 `protobuf:"bytes,4,opt,name=transaction_uuid,json=transactionUuid,proto3" json:"transaction_uuid,omitempty"`
-	UnSignTx        string                 `protobuf:"bytes,5,opt,name=un_sign_tx,json=unSignTx,proto3" json:"un_sign_tx,omitempty"`
+	TransactionUuid string                 `protobuf:"bytes,1,opt,name=transaction_uuid,json=transactionUuid,proto3" json:"transaction_uuid,omitempty"`
+	UnSignTx        string                 `protobuf:"bytes,2,opt,name=un_sign_tx,json=unSignTx,proto3" json:"un_sign_tx,omitempty"`
+	TxData          string                 `protobuf:"bytes,3,opt,name=tx_data,json=txData,proto3" json:"tx_data,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -671,6 +672,13 @@ func (x *ReturnTransactionHashes) GetTransactionUuid() string {
 func (x *ReturnTransactionHashes) GetUnSignTx() string {
 	if x != nil {
 		return x.UnSignTx
+	}
+	return ""
+}
+
+func (x *ReturnTransactionHashes) GetTxData() string {
+	if x != nil {
+		return x.TxData
 	}
 	return ""
 }
@@ -739,7 +747,7 @@ type SignedTransactions struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	TransactionUuid string                 `protobuf:"bytes,1,opt,name=transaction_uuid,json=transactionUuid,proto3" json:"transaction_uuid,omitempty"`
 	Signature       string                 `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
-	TxType          string                 `protobuf:"bytes,3,opt,name=tx_type,json=txType,proto3" json:"tx_type,omitempty"`
+	TxData          string                 `protobuf:"bytes,3,opt,name=tx_data,json=txData,proto3" json:"tx_data,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -788,9 +796,9 @@ func (x *SignedTransactions) GetSignature() string {
 	return ""
 }
 
-func (x *SignedTransactions) GetTxType() string {
+func (x *SignedTransactions) GetTxData() string {
 	if x != nil {
-		return x.TxType
+		return x.TxData
 	}
 	return ""
 }
@@ -975,6 +983,186 @@ func (x *SignedWithdrawTransactionResponse) GetReturnSignTxn() []*ReturnSignedTr
 	return nil
 }
 
+type Withdraw struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChainId       string                 `protobuf:"bytes,1,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
+	Fee           string                 `protobuf:"bytes,4,opt,name=fee,proto3" json:"fee,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Withdraw) Reset() {
+	*x = Withdraw{}
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Withdraw) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Withdraw) ProtoMessage() {}
+
+func (x *Withdraw) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Withdraw.ProtoReflect.Descriptor instead.
+func (*Withdraw) Descriptor() ([]byte, []int) {
+	return file_protobuf_dapplink_wallet_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Withdraw) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *Withdraw) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *Withdraw) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *Withdraw) GetFee() string {
+	if x != nil {
+		return x.Fee
+	}
+	return ""
+}
+
+type SubmitWithdrawRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ConsumerToken string                 `protobuf:"bytes,1,opt,name=consumer_token,json=consumerToken,proto3" json:"consumer_token,omitempty"`
+	RequestId     string                 `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	WithdrawList  []*Withdraw            `protobuf:"bytes,3,rep,name=withdraw_list,json=withdrawList,proto3" json:"withdraw_list,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitWithdrawRequest) Reset() {
+	*x = SubmitWithdrawRequest{}
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitWithdrawRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitWithdrawRequest) ProtoMessage() {}
+
+func (x *SubmitWithdrawRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitWithdrawRequest.ProtoReflect.Descriptor instead.
+func (*SubmitWithdrawRequest) Descriptor() ([]byte, []int) {
+	return file_protobuf_dapplink_wallet_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SubmitWithdrawRequest) GetConsumerToken() string {
+	if x != nil {
+		return x.ConsumerToken
+	}
+	return ""
+}
+
+func (x *SubmitWithdrawRequest) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *SubmitWithdrawRequest) GetWithdrawList() []*Withdraw {
+	if x != nil {
+		return x.WithdrawList
+	}
+	return nil
+}
+
+type SubmitWithdrawResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          ReturnCode             `protobuf:"varint,1,opt,name=code,proto3,enum=syncs.ReturnCode" json:"code,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubmitWithdrawResponse) Reset() {
+	*x = SubmitWithdrawResponse{}
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubmitWithdrawResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitWithdrawResponse) ProtoMessage() {}
+
+func (x *SubmitWithdrawResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_protobuf_dapplink_wallet_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitWithdrawResponse.ProtoReflect.Descriptor instead.
+func (*SubmitWithdrawResponse) Descriptor() ([]byte, []int) {
+	return file_protobuf_dapplink_wallet_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *SubmitWithdrawResponse) GetCode() ReturnCode {
+	if x != nil {
+		return x.Code
+	}
+	return ReturnCode_ERROR
+}
+
+func (x *SubmitWithdrawResponse) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
 var File_protobuf_dapplink_wallet_proto protoreflect.FileDescriptor
 
 const file_protobuf_dapplink_wallet_proto_rawDesc = "" +
@@ -1025,11 +1213,12 @@ const file_protobuf_dapplink_wallet_proto_rawDesc = "" +
 	"\x0econsumer_token\x18\x01 \x01(\tR\rconsumerToken\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x02 \x01(\tR\trequestId\x12%\n" +
-	"\x03txn\x18\x03 \x03(\v2\x13.syncs.TransactionsR\x03txn\"b\n" +
+	"\x03txn\x18\x03 \x03(\v2\x13.syncs.TransactionsR\x03txn\"{\n" +
 	"\x17ReturnTransactionHashes\x12)\n" +
-	"\x10transaction_uuid\x18\x04 \x01(\tR\x0ftransactionUuid\x12\x1c\n" +
+	"\x10transaction_uuid\x18\x01 \x01(\tR\x0ftransactionUuid\x12\x1c\n" +
 	"\n" +
-	"un_sign_tx\x18\x05 \x01(\tR\bunSignTx\"\xa6\x01\n" +
+	"un_sign_tx\x18\x02 \x01(\tR\bunSignTx\x12\x17\n" +
+	"\atx_data\x18\x03 \x01(\tR\x06txData\"\xa6\x01\n" +
 	"!UnSignWithdrawTransactionResponse\x12%\n" +
 	"\x04code\x18\x01 \x01(\x0e2\x11.syncs.ReturnCodeR\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12H\n" +
@@ -1037,7 +1226,7 @@ const file_protobuf_dapplink_wallet_proto_rawDesc = "" +
 	"\x12SignedTransactions\x12)\n" +
 	"\x10transaction_uuid\x18\x01 \x01(\tR\x0ftransactionUuid\x12\x1c\n" +
 	"\tsignature\x18\x02 \x01(\tR\tsignature\x12\x17\n" +
-	"\atx_type\x18\x03 \x01(\tR\x06txType\"\x9e\x01\n" +
+	"\atx_data\x18\x03 \x01(\tR\x06txData\"\x9e\x01\n" +
 	" SignedWithdrawTransactionRequest\x12%\n" +
 	"\x0econsumer_token\x18\x01 \x01(\tR\rconsumerToken\x12\x1d\n" +
 	"\n" +
@@ -1050,16 +1239,30 @@ const file_protobuf_dapplink_wallet_proto_rawDesc = "" +
 	"!SignedWithdrawTransactionResponse\x12%\n" +
 	"\x04code\x18\x01 \x01(\x0e2\x11.syncs.ReturnCodeR\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\x12G\n" +
-	"\x0freturn_sign_txn\x18\x03 \x03(\v2\x1f.syncs.ReturnSignedTransactionsR\rreturnSignTxn*$\n" +
+	"\x0freturn_sign_txn\x18\x03 \x03(\v2\x1f.syncs.ReturnSignedTransactionsR\rreturnSignTxn\"g\n" +
+	"\bWithdraw\x12\x19\n" +
+	"\bchain_id\x18\x01 \x01(\tR\achainId\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x14\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\x12\x10\n" +
+	"\x03fee\x18\x04 \x01(\tR\x03fee\"\x93\x01\n" +
+	"\x15SubmitWithdrawRequest\x12%\n" +
+	"\x0econsumer_token\x18\x01 \x01(\tR\rconsumerToken\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x02 \x01(\tR\trequestId\x124\n" +
+	"\rwithdraw_list\x18\x03 \x03(\v2\x0f.syncs.WithdrawR\fwithdrawList\"Q\n" +
+	"\x16SubmitWithdrawResponse\x12%\n" +
+	"\x04code\x18\x01 \x01(\x0e2\x11.syncs.ReturnCodeR\x04code\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg*$\n" +
 	"\n" +
 	"ReturnCode\x12\t\n" +
 	"\x05ERROR\x10\x00\x12\v\n" +
-	"\aSUCCESS\x10\x012\xb1\x03\n" +
+	"\aSUCCESS\x10\x012\x82\x04\n" +
 	"\x1aBusinessMiddleWireServices\x12U\n" +
 	"\x10businessRegister\x12\x1e.syncs.BusinessRegisterRequest\x1a\x1f.syncs.BusinessRegisterResponse\"\x00\x12^\n" +
 	"\x1bexportAddressesByPublicKeys\x12\x1d.syncs.ExportAddressesRequest\x1a\x1e.syncs.ExportAddressesResponse\"\x00\x12m\n" +
 	"\x16buildUnSignTransaction\x12'.syncs.UnSignWithdrawTransactionRequest\x1a(.syncs.UnSignWithdrawTransactionResponse\"\x00\x12m\n" +
-	"\x16buildSignedTransaction\x12'.syncs.SignedWithdrawTransactionRequest\x1a(.syncs.SignedWithdrawTransactionResponse\"\x00B\x1aZ\x18./protobuf/dal-wallet-gob\x06proto3"
+	"\x16buildSignedTransaction\x12'.syncs.SignedWithdrawTransactionRequest\x1a(.syncs.SignedWithdrawTransactionResponse\"\x00\x12O\n" +
+	"\x0esubmitWithdraw\x12\x1c.syncs.SubmitWithdrawRequest\x1a\x1d.syncs.SubmitWithdrawResponse\"\x00B\x1aZ\x18./protobuf/dal-wallet-gob\x06proto3"
 
 var (
 	file_protobuf_dapplink_wallet_proto_rawDescOnce sync.Once
@@ -1074,7 +1277,7 @@ func file_protobuf_dapplink_wallet_proto_rawDescGZIP() []byte {
 }
 
 var file_protobuf_dapplink_wallet_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_protobuf_dapplink_wallet_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_protobuf_dapplink_wallet_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_protobuf_dapplink_wallet_proto_goTypes = []any{
 	(ReturnCode)(0),                           // 0: syncs.ReturnCode
 	(*PublicKey)(nil),                         // 1: syncs.PublicKey
@@ -1092,6 +1295,9 @@ var file_protobuf_dapplink_wallet_proto_goTypes = []any{
 	(*SignedWithdrawTransactionRequest)(nil),  // 13: syncs.SignedWithdrawTransactionRequest
 	(*ReturnSignedTransactions)(nil),          // 14: syncs.ReturnSignedTransactions
 	(*SignedWithdrawTransactionResponse)(nil), // 15: syncs.SignedWithdrawTransactionResponse
+	(*Withdraw)(nil),                          // 16: syncs.Withdraw
+	(*SubmitWithdrawRequest)(nil),             // 17: syncs.SubmitWithdrawRequest
+	(*SubmitWithdrawResponse)(nil),            // 18: syncs.SubmitWithdrawResponse
 }
 var file_protobuf_dapplink_wallet_proto_depIdxs = []int32{
 	0,  // 0: syncs.BusinessRegisterResponse.Code:type_name -> syncs.ReturnCode
@@ -1104,19 +1310,23 @@ var file_protobuf_dapplink_wallet_proto_depIdxs = []int32{
 	12, // 7: syncs.SignedWithdrawTransactionRequest.sign_txn:type_name -> syncs.SignedTransactions
 	0,  // 8: syncs.SignedWithdrawTransactionResponse.code:type_name -> syncs.ReturnCode
 	14, // 9: syncs.SignedWithdrawTransactionResponse.return_sign_txn:type_name -> syncs.ReturnSignedTransactions
-	4,  // 10: syncs.BusinessMiddleWireServices.businessRegister:input_type -> syncs.BusinessRegisterRequest
-	6,  // 11: syncs.BusinessMiddleWireServices.exportAddressesByPublicKeys:input_type -> syncs.ExportAddressesRequest
-	9,  // 12: syncs.BusinessMiddleWireServices.buildUnSignTransaction:input_type -> syncs.UnSignWithdrawTransactionRequest
-	13, // 13: syncs.BusinessMiddleWireServices.buildSignedTransaction:input_type -> syncs.SignedWithdrawTransactionRequest
-	5,  // 14: syncs.BusinessMiddleWireServices.businessRegister:output_type -> syncs.BusinessRegisterResponse
-	7,  // 15: syncs.BusinessMiddleWireServices.exportAddressesByPublicKeys:output_type -> syncs.ExportAddressesResponse
-	11, // 16: syncs.BusinessMiddleWireServices.buildUnSignTransaction:output_type -> syncs.UnSignWithdrawTransactionResponse
-	15, // 17: syncs.BusinessMiddleWireServices.buildSignedTransaction:output_type -> syncs.SignedWithdrawTransactionResponse
-	14, // [14:18] is the sub-list for method output_type
-	10, // [10:14] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	16, // 10: syncs.SubmitWithdrawRequest.withdraw_list:type_name -> syncs.Withdraw
+	0,  // 11: syncs.SubmitWithdrawResponse.code:type_name -> syncs.ReturnCode
+	4,  // 12: syncs.BusinessMiddleWireServices.businessRegister:input_type -> syncs.BusinessRegisterRequest
+	6,  // 13: syncs.BusinessMiddleWireServices.exportAddressesByPublicKeys:input_type -> syncs.ExportAddressesRequest
+	9,  // 14: syncs.BusinessMiddleWireServices.buildUnSignTransaction:input_type -> syncs.UnSignWithdrawTransactionRequest
+	13, // 15: syncs.BusinessMiddleWireServices.buildSignedTransaction:input_type -> syncs.SignedWithdrawTransactionRequest
+	17, // 16: syncs.BusinessMiddleWireServices.submitWithdraw:input_type -> syncs.SubmitWithdrawRequest
+	5,  // 17: syncs.BusinessMiddleWireServices.businessRegister:output_type -> syncs.BusinessRegisterResponse
+	7,  // 18: syncs.BusinessMiddleWireServices.exportAddressesByPublicKeys:output_type -> syncs.ExportAddressesResponse
+	11, // 19: syncs.BusinessMiddleWireServices.buildUnSignTransaction:output_type -> syncs.UnSignWithdrawTransactionResponse
+	15, // 20: syncs.BusinessMiddleWireServices.buildSignedTransaction:output_type -> syncs.SignedWithdrawTransactionResponse
+	18, // 21: syncs.BusinessMiddleWireServices.submitWithdraw:output_type -> syncs.SubmitWithdrawResponse
+	17, // [17:22] is the sub-list for method output_type
+	12, // [12:17] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_protobuf_dapplink_wallet_proto_init() }
@@ -1130,7 +1340,7 @@ func file_protobuf_dapplink_wallet_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protobuf_dapplink_wallet_proto_rawDesc), len(file_protobuf_dapplink_wallet_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

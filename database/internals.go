@@ -19,7 +19,7 @@ type Internals struct {
 	Version     string    `json:"version"`
 	TxType      string    `json:"tx_type"`
 	TxSignHex   string    `json:"tx_sign_hex"`
-	Status      uint8     `gorm:"default:0" json:"status"`
+	Status      TxStatus  `gorm:"default:0" json:"status"`
 	Timestamp   uint64    `json:"timestamp"`
 }
 

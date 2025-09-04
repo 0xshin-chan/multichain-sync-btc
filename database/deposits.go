@@ -18,7 +18,7 @@ type Deposits struct {
 	LockTime    *big.Int `gorm:"serializer:u256"`
 	Version     string   `json:"version"`
 	Confirms    uint8    `json:"confirms"`
-	Status      uint8    `json:"status"`
+	Status      TxStatus `json:"status"`
 	Timestamp   uint64   `json:"timestamp"`
 }
 

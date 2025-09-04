@@ -18,12 +18,13 @@ type Vins struct {
 	Amount           *big.Int  `gorm:"serializer:u256" json:"amount"`             // 输入金额
 	SpendTxHash      string    `json:"spend_tx_hash"`                             // 花费该输入的交易hash
 	SpendBlockHeight *big.Int  `gorm:"serializer:u256" json:"spend_block_height"` // 被花费所在块高
-	isSpend          bool      `json:"is_spend"`
+	IsSpend          bool      `json:"is_spend"`
 	Timestamp        uint64    `json:"timestamp"`
 }
 
 type VinsView interface {
 	QueryVinByTxId(businessId, address, txId string) (*Vins, error)
+	QueryVinsByAddress(businessId, address string) ([]Vins, error)
 }
 
 type VinsDB interface {
@@ -51,6 +52,18 @@ func (v vinsDB) QueryVinByTxId(businessId, address, txId string) (*Vins, error) 
 		return nil, err
 	}
 	return &vinEntry, nil
+}
+
+func (v vinsDB) QueryVinsByAddress(businessId, address string) ([]Vins, error) {
+	var vins []Vins
+	err := v.gorm.Table("vins_"+businessId).Where("address = ?", address).Find(vins).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, gorm.ErrRecordNotFound
+		}
+		return nil, err
+	}
+	return vins, nil
 }
 
 func (v vinsDB) StoreVins(businessId string, vins []Vins) error {

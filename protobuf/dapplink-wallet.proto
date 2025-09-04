@@ -64,8 +64,9 @@ message UnSignWithdrawTransactionRequest {
 }
 
 message ReturnTransactionHashes {
-  string transaction_uuid = 4;
-  string un_sign_tx = 5;
+  string transaction_uuid = 1;
+  string un_sign_tx = 2;
+  string tx_data = 3;
 }
 
 message UnSignWithdrawTransactionResponse {
@@ -77,7 +78,7 @@ message UnSignWithdrawTransactionResponse {
 message SignedTransactions {
   string transaction_uuid = 1;
   string signature = 2;
-  string tx_type = 3;
+  string tx_data = 3;
 }
 
 message SignedWithdrawTransactionRequest {
@@ -98,9 +99,30 @@ message SignedWithdrawTransactionResponse {
   repeated  ReturnSignedTransactions return_sign_txn = 3;
 }
 
+message Withdraw {
+  string chain_id = 1;
+  string address = 2;
+  string value = 3;
+  string fee = 4;
+}
+
+message SubmitWithdrawRequest {
+  string consumer_token = 1;
+  string request_id = 2;
+  repeated Withdraw withdraw_list = 3;
+}
+
+message SubmitWithdrawResponse {
+  ReturnCode code = 1;
+  string msg = 2;
+}
+
 service BusinessMiddleWireServices {
   rpc businessRegister(BusinessRegisterRequest) returns (BusinessRegisterResponse) {}
   rpc exportAddressesByPublicKeys(ExportAddressesRequest) returns (ExportAddressesResponse) {}
   rpc buildUnSignTransaction(UnSignWithdrawTransactionRequest) returns(UnSignWithdrawTransactionResponse){}
   rpc buildSignedTransaction(SignedWithdrawTransactionRequest) returns(SignedWithdrawTransactionResponse){}
+
+  // 提交提现交易
+  rpc submitWithdraw(SubmitWithdrawRequest) returns (SubmitWithdrawResponse){}
 }

@@ -3,6 +3,7 @@ package database
 import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"math/big"
 )
 
 type Vouts struct {
@@ -10,7 +11,7 @@ type Vouts struct {
 	Address   string    `json:"address"` // 资金接收方
 	N         uint8     `json:"n"`       // 当前输出在交易里的序号
 	Script    string    `json:"script"`  // 锁定脚本，用于与 vins 的scriptSig验证
-	Amount    string    `gorm:"serializer:u256" json:"amount"`
+	Amount    *big.Int  `gorm:"serializer:u256" json:"amount"`
 	Timestamp uint64    `json:"timestamp"`
 }
 

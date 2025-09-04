@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS deposits
     lock_time     UINT256  NOT NULL,
     version       VARCHAR  NOT NULL,
     confirms      SMALLINT NOT NULL DEFAULT 0,
-    status        SMALLINT NOT NULL DEFAULT 0,
+    status        VARCHAR NOT NULL,
     timestamp     INTEGER  NOT NULL CHECK (timestamp > 0)
 );
 CREATE INDEX IF NOT EXISTS deposits_hash ON deposits (hash);
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS withdraws
     lock_time                UINT256  NOT NULL,
     version                  VARCHAR  NOT NULL,
     tx_sign_hex              VARCHAR  NOT NULL,
-    status                   SMALLINT NOT NULL DEFAULT 0,
+    status                   VARCHAR NOT NULL ,
     timestamp                INTEGER  NOT NULL CHECK (timestamp > 0)
 );
 CREATE INDEX IF NOT EXISTS withdraws_hash ON withdraws (hash);
@@ -133,7 +133,7 @@ CREATE INDEX IF NOT EXISTS withdraws_timestamp ON withdraws (timestamp);
 CREATE TABLE IF NOT EXISTS internals
 (
     guid                     VARCHAR PRIMARY KEY,
-    status                   SMALLINT NOT NULL DEFAULT 0,
+    status                   VARCHAR,
     block_hash               VARCHAR  NOT NULL,
     block_number             UINT256  NOT NULL CHECK (block_number > 0),
     hash                     VARCHAR  NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS transactions
     fee           UINT256  NOT NULL,
     lock_time     UINT256  NOT NULL,
     version       VARCHAR  NOT NULL,
-    status        SMALLINT NOT NULL DEFAULT 0,
+    status        VARCHAR NOT NULL,
     tx_type       VARCHAR  NOT NULL,
     timestamp     INTEGER  NOT NULL CHECK (timestamp > 0)
 );
@@ -167,6 +167,7 @@ CREATE INDEX IF NOT EXISTS transactions_timestamp ON transactions (timestamp);
 CREATE TABLE IF NOT EXISTS child_txs (
     guid          VARCHAR PRIMARY KEY,
     hash          VARCHAR  NOT NULL,
+    tx_id         VARCHAR  NOT NULL,
     tx_index      UINT256  NOT NULL,
     from_address  VARCHAR  NOT NULL,
     to_address    VARCHAR  NOT NULL,

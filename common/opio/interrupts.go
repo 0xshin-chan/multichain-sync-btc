@@ -8,8 +8,8 @@ import (
 )
 
 var DefaultInterruptSignals = []os.Signal{
-	os.Interrupt,
-	os.Kill,
+	os.Interrupt, // Ctrl+C
+	os.Kill,      // kill -9
 	syscall.SIGTERM,
 	syscall.SIGQUIT,
 }
@@ -20,7 +20,7 @@ func BlockOnInterrupts(signals ...os.Signal) {
 	}
 	interruptChannel := make(chan os.Signal, 1)
 	signal.Notify(interruptChannel, signals...)
-	<-interruptChannel
+	<-interruptChannel // 阻塞，直到收到中断信号
 }
 
 func BlockOnInterruptsContext(ctx context.Context, signals ...os.Signal) {
@@ -30,9 +30,9 @@ func BlockOnInterruptsContext(ctx context.Context, signals ...os.Signal) {
 	interruptChannel := make(chan os.Signal, 1)
 	signal.Notify(interruptChannel, signals...)
 	select {
-	case <-interruptChannel:
+	case <-interruptChannel: // 收到中断信号
 	case <-ctx.Done():
-		signal.Stop(interruptChannel)
+		signal.Stop(interruptChannel) // 或者 context 被取消
 	}
 }
 
@@ -53,13 +53,16 @@ func (c *interruptCatcher) Block(ctx context.Context) {
 
 func WithInterruptBlocker(ctx context.Context) context.Context {
 	if ctx.Value(blockerContextKey) != nil { // already has an interrupt handler
+		// 已经有了中断处理器，直接返回
 		return ctx
 	}
 	catcher := &interruptCatcher{
 		incoming: make(chan os.Signal, 10),
 	}
+	// 注册信号监听
 	signal.Notify(catcher.incoming, DefaultInterruptSignals...)
 
+	// 把 Block 函数存到 context 里
 	return context.WithValue(ctx, blockerContextKey, BlockFn(catcher.Block))
 }
 

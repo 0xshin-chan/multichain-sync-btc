@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	defaulConfirmations         = 64
+	defaultConfirmations        = 64
 	defaultSynchronizerInterval = 5000
 	defaultWorkerInterval       = 500
 	defaultBlocksStep           = 500
@@ -65,7 +65,7 @@ func LoadConfig(cliCtx *cli.Context) (Config, error) {
 	cfg = NewConfig(cliCtx)
 
 	if cfg.ChainNode.Confirmations == 0 {
-		cfg.ChainNode.Confirmations = defaulConfirmations
+		cfg.ChainNode.Confirmations = defaultConfirmations
 	}
 
 	if cfg.ChainNode.SynchronizerInterval == 0 {

@@ -18,7 +18,7 @@ type Withdraws struct {
 	LockTime    *big.Int  `gorm:"serializer:u256" json:"lock_time"`
 	Version     string    `json:"version"`
 	TxSignHex   string    `json:"tx_sign_hex"`
-	Status      uint8     `gorm:"default:0" json:"status"`
+	Status      TxStatus  `json:"status"`
 	Timestamp   uint64    `json:"timestamp"`
 }
 
@@ -33,6 +33,7 @@ type WithdrawsDB interface {
 
 	StoreWithdraws(string, *Withdraws) error
 	UpdateWithdrawStatus(requestId string, status TxStatus, withdrawsList []Withdraws) error
+	UpdateWithdrawByGuid(requestId string, transactionId string, txSignedHex string) error
 }
 
 type withdrawsDB struct {
@@ -62,7 +63,7 @@ func (db *withdrawsDB) UpdateWithdrawStatus(requestId string, status TxStatus, w
 
 		result := tx.Table(tableName).
 			Where("guid IN ?", guids).
-			Where("status = ?", TxStatusWalletDone).
+			Where("status = ?", TxStatusWithdrawed).
 			Update("status", status)
 
 		if result.Error != nil {
@@ -86,10 +87,29 @@ func (db *withdrawsDB) UpdateWithdrawStatus(requestId string, status TxStatus, w
 	})
 }
 
+func (db *withdrawsDB) UpdateWithdrawByGuid(requestId string, transactionId string, txSignedHex string) error {
+	tableName := fmt.Sprintf("withdraws_%s", requestId)
+	var withdrawItem Withdraws
+	result := db.gorm.Table(tableName).Where("guid = ?", transactionId).Take(&withdrawItem)
+	if result.Error != nil {
+		log.Error("query fail", "err", result.Error)
+	}
+
+	withdrawItem.TxSignHex = txSignedHex
+	withdrawItem.Status = TxStatusUnSent
+
+	err := db.gorm.Table(tableName).Save(withdrawItem).Error
+	if err != nil {
+		log.Error("update tx fail", "err", err)
+		return err
+	}
+	return nil
+}
+
 func (db *withdrawsDB) QueryNotifyWithdraws(requestId string) ([]Withdraws, error) {
 	var notifyWithdraws []Withdraws
 	result := db.gorm.Table("withdraws_"+requestId).
-		Where("status = ?", TxStatusWalletDone).
+		Where("status = ?", TxStatusSent).
 		Find(&notifyWithdraws)
 
 	if result.Error != nil {
@@ -102,7 +122,7 @@ func (db *withdrawsDB) QueryNotifyWithdraws(requestId string) ([]Withdraws, erro
 func (db *withdrawsDB) UnSendWithdrawsList(requestId string) ([]Withdraws, error) {
 	var withdrawsList []Withdraws
 	err := db.gorm.Table("withdraws_"+requestId).
-		Where("status = ?", TxStatusSigned).
+		Where("status = ?", TxStatusUnSent).
 		Find(&withdrawsList).Error
 
 	if err != nil {

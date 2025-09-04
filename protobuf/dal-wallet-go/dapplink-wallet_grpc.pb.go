@@ -23,6 +23,7 @@ const (
 	BusinessMiddleWireServices_ExportAddressesByPublicKeys_FullMethodName = "/syncs.BusinessMiddleWireServices/exportAddressesByPublicKeys"
 	BusinessMiddleWireServices_BuildUnSignTransaction_FullMethodName      = "/syncs.BusinessMiddleWireServices/buildUnSignTransaction"
 	BusinessMiddleWireServices_BuildSignedTransaction_FullMethodName      = "/syncs.BusinessMiddleWireServices/buildSignedTransaction"
+	BusinessMiddleWireServices_SubmitWithdraw_FullMethodName              = "/syncs.BusinessMiddleWireServices/submitWithdraw"
 )
 
 // BusinessMiddleWireServicesClient is the client API for BusinessMiddleWireServices service.
@@ -33,6 +34,8 @@ type BusinessMiddleWireServicesClient interface {
 	ExportAddressesByPublicKeys(ctx context.Context, in *ExportAddressesRequest, opts ...grpc.CallOption) (*ExportAddressesResponse, error)
 	BuildUnSignTransaction(ctx context.Context, in *UnSignWithdrawTransactionRequest, opts ...grpc.CallOption) (*UnSignWithdrawTransactionResponse, error)
 	BuildSignedTransaction(ctx context.Context, in *SignedWithdrawTransactionRequest, opts ...grpc.CallOption) (*SignedWithdrawTransactionResponse, error)
+	// 提交提现交易
+	SubmitWithdraw(ctx context.Context, in *SubmitWithdrawRequest, opts ...grpc.CallOption) (*SubmitWithdrawResponse, error)
 }
 
 type businessMiddleWireServicesClient struct {
@@ -83,6 +86,16 @@ func (c *businessMiddleWireServicesClient) BuildSignedTransaction(ctx context.Co
 	return out, nil
 }
 
+func (c *businessMiddleWireServicesClient) SubmitWithdraw(ctx context.Context, in *SubmitWithdrawRequest, opts ...grpc.CallOption) (*SubmitWithdrawResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubmitWithdrawResponse)
+	err := c.cc.Invoke(ctx, BusinessMiddleWireServices_SubmitWithdraw_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BusinessMiddleWireServicesServer is the server API for BusinessMiddleWireServices service.
 // All implementations should embed UnimplementedBusinessMiddleWireServicesServer
 // for forward compatibility.
@@ -91,6 +104,8 @@ type BusinessMiddleWireServicesServer interface {
 	ExportAddressesByPublicKeys(context.Context, *ExportAddressesRequest) (*ExportAddressesResponse, error)
 	BuildUnSignTransaction(context.Context, *UnSignWithdrawTransactionRequest) (*UnSignWithdrawTransactionResponse, error)
 	BuildSignedTransaction(context.Context, *SignedWithdrawTransactionRequest) (*SignedWithdrawTransactionResponse, error)
+	// 提交提现交易
+	SubmitWithdraw(context.Context, *SubmitWithdrawRequest) (*SubmitWithdrawResponse, error)
 }
 
 // UnimplementedBusinessMiddleWireServicesServer should be embedded to have
@@ -111,6 +126,9 @@ func (UnimplementedBusinessMiddleWireServicesServer) BuildUnSignTransaction(cont
 }
 func (UnimplementedBusinessMiddleWireServicesServer) BuildSignedTransaction(context.Context, *SignedWithdrawTransactionRequest) (*SignedWithdrawTransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildSignedTransaction not implemented")
+}
+func (UnimplementedBusinessMiddleWireServicesServer) SubmitWithdraw(context.Context, *SubmitWithdrawRequest) (*SubmitWithdrawResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitWithdraw not implemented")
 }
 func (UnimplementedBusinessMiddleWireServicesServer) testEmbeddedByValue() {}
 
@@ -204,6 +222,24 @@ func _BusinessMiddleWireServices_BuildSignedTransaction_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BusinessMiddleWireServices_SubmitWithdraw_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitWithdrawRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BusinessMiddleWireServicesServer).SubmitWithdraw(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BusinessMiddleWireServices_SubmitWithdraw_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BusinessMiddleWireServicesServer).SubmitWithdraw(ctx, req.(*SubmitWithdrawRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BusinessMiddleWireServices_ServiceDesc is the grpc.ServiceDesc for BusinessMiddleWireServices service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -226,6 +262,10 @@ var BusinessMiddleWireServices_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "buildSignedTransaction",
 			Handler:    _BusinessMiddleWireServices_BuildSignedTransaction_Handler,
+		},
+		{
+			MethodName: "submitWithdraw",
+			Handler:    _BusinessMiddleWireServices_SubmitWithdraw_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

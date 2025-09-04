@@ -29,6 +29,7 @@ type DB struct {
 	Transactions TransactionsDB
 	Vins         VinsDB
 	Vouts        VoutsDB
+	ChildTxs     ChildTxsDB
 }
 
 func NewDB(ctx context.Context, dbConfig config.DBConfig) (*DB, error) {
